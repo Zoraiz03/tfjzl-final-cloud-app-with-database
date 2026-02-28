@@ -104,14 +104,10 @@ def enroll(request, course_id):
 
 def extract_answers(request):
     submitted_answers = []
-    for key in request.POST:
-        if key.startswith('choice'):
-            value = request.POST[key]
-            choice_id = int(value)
-            submitted_answers.append(choice_id)
+    for value in request.POST.getlist('choice'):
+        choice_id = int(value)
+        submitted_answers.append(choice_id)
     return submitted_answers
-
-
 def submit(request, course_id):
     course = get_object_or_404(Course, pk=course_id)
     user = request.user
